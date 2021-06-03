@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Difficulty, fetchQuizQuestions, QuestionState} from './api';
 import { GlobalStyle, Wrapper } from './App.styles';
+import CountDown from './components/CountDown';
 import QuestionCard from './components/QuestionCard';
 
 export type AnswersObject = {
@@ -108,7 +109,14 @@ export default function App() {
           </button>
         ): null}
         {!gameTrivia.gameOver
+        && gameTrivia.userAnswers.length === TOTAL_QUESTIONS
         && <p className="score">Score: {gameTrivia.score}</p>
+        }
+        {!gameTrivia.gameOver
+        && !gameTrivia.loading
+        && gameTrivia.userAnswers.length !== gameTrivia.number + 1
+        && gameTrivia.number !== TOTAL_QUESTIONS - 1
+        && <CountDown timer={60} />
         }
         {!gameTrivia.loading
         && !gameTrivia.gameOver
