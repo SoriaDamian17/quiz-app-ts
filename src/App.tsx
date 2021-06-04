@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Difficulty, fetchQuizQuestions, QuestionState} from './api';
 import { GlobalStyle, Wrapper } from './App.styles';
+import CountDown from './components/CountDown';
 import QuestionCard from './components/QuestionCard';
 
 export type AnswersObject = {
@@ -15,6 +16,7 @@ interface GAME {
   number: number,
   userAnswers: AnswersObject[],
   score: number,
+  timer: number,
   gameOver: boolean
 };
 
@@ -28,10 +30,10 @@ export default function App() {
     number: 0,
     userAnswers: [],
     score: 0,
+    timer: 10,
     gameOver: true 
   })
 
-  console.log(gameTrivia.questions);
   async function startTrivia() {
     setGame({
       ...gameTrivia,
@@ -65,7 +67,6 @@ export default function App() {
           ...gameTrivia,
           score: newScore
         });
-
       }
 
       const answerObject = {
@@ -87,12 +88,14 @@ export default function App() {
     if (nextQuestion === TOTAL_QUESTIONS) {
       setGame({
         ...gameTrivia,
-        gameOver: true
+        gameOver: true,
+        timer: 0,
       });
     } else {
       setGame({
         ...gameTrivia,
-        number: nextQuestion
+        number: nextQuestion,
+        timer: 10
       })
     }
   }
@@ -108,7 +111,16 @@ export default function App() {
           </button>
         ): null}
         {!gameTrivia.gameOver
+        && gameTrivia.userAnswers.length === TOTAL_QUESTIONS
         && <p className="score">Score: {gameTrivia.score}</p>
+        }
+        {!gameTrivia.gameOver
+        && !gameTrivia.loading
+        && gameTrivia.userAnswers.length !== gameTrivia.number + 1
+        && gameTrivia.number !== TOTAL_QUESTIONS - 1
+        && <CountDown timer={gameTrivia.timer} onFinish={() => {
+          nextQuestions();
+        }} />
         }
         {!gameTrivia.loading
         && !gameTrivia.gameOver

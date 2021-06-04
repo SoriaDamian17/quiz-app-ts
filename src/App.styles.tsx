@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   * {
     font-family: 'Catamaran', sans-serif;
@@ -22,6 +23,7 @@ export const GlobalStyle = createGlobalStyle`
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   > p {
     color: #fff;
