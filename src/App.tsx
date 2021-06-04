@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Difficulty, fetchQuizQuestions, QuestionState} from './api';
 import { GlobalStyle, Wrapper } from './App.styles';
 import CountDown from './components/CountDown';
