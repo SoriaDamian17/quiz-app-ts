@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState} from 'react';
 import {Difficulty, fetchQuizQuestions, QuestionState} from './api';
 import { GlobalStyle, Wrapper } from './App.styles';
 import CountDown from './components/CountDown';
@@ -118,9 +118,7 @@ export default function App() {
         && !gameTrivia.loading
         && gameTrivia.userAnswers.length !== gameTrivia.number + 1
         && gameTrivia.number !== TOTAL_QUESTIONS - 1
-        && <CountDown timer={gameTrivia.timer} onFinish={() => {
-          nextQuestions();
-        }} />
+        && <CountDown timer={gameTrivia.timer} onFinish={nextQuestions} />
         }
         {!gameTrivia.loading
         && !gameTrivia.gameOver
