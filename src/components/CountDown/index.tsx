@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { CountWrapper } from './styles';
+import { CountTitle, CountWrapper } from './styles';
 
 interface Props {
-    timer: number
+    timer: number;
+    onFinish: () => void;
 }
 
 let fnTimer: any;
-const CountDown:React.FC<Props> = ({timer}) => {
+const CountDown:React.FC<Props> = ({timer, onFinish}) => {
     const [counter, setCounter] = useState(timer);
 
     useEffect(() => {
@@ -14,9 +15,15 @@ const CountDown:React.FC<Props> = ({timer}) => {
         return () => clearInterval(fnTimer);
     }, [counter]);
 
+    useEffect(() => {
+        if (counter === 0) {
+            setCounter(timer);
+            onFinish();
+        }
+    }, [counter])
     return (
         <CountWrapper>
-            <div>Countdown: {counter}</div>
+            <CountTitle>Timer: {counter}</CountTitle>
         </CountWrapper>
     );
 }
