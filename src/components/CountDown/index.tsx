@@ -11,16 +11,14 @@ const CountDown:React.FC<Props> = ({timer, onFinish}) => {
     const [counter, setCounter] = useState(timer);
 
     useEffect(() => {
-        fnTimer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-        return () => clearInterval(fnTimer);
-    }, [counter]);
-
-    useEffect(() => {
         if (counter === 0) {
             setCounter(timer);
             onFinish();
         }
-    }, [counter])
+        fnTimer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => clearInterval(fnTimer);
+    }, [counter]);
+
     return (
         <CountWrapper>
             <CountTitle>Timer: {counter}</CountTitle>
